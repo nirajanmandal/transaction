@@ -1,0 +1,169 @@
+{% load staticfiles %}
+{% load fontawesome %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bower_components/components-font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bower_components/css/styles.css' %}">
+    {% block extra_stylesheets %}
+
+    {% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-fixed-top" style="font-weight: bold;font-size: large">
+    <a class="navbar-brand ml-5" style="font-size: xx-large; color: #171a1d" href="{% url 'txn:index' %}"><i
+            class="fa fa-home"></i></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse ml-5" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-users"></i> Customer
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'customer:create' %}">Add</a>
+                    <a class="dropdown-item" href="{% url 'customer:list' %}">List</a>
+                    <a class="dropdown-item" href="{% url 'customer:trash_list' %}">Trash</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-money"></i> Transaction
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'txn:index' %}">Create</a>
+                    <a class="dropdown-item" href="{% url 'txn:list' %}">List</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-balance-scale"></i> Unit
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'units:create' %}">Create</a>
+                    <a class="dropdown-item" href="{% url 'units:list' %}">List</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-shopping-cart"></i> Item
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'item:create' %}">Create</a>
+                    <a class="dropdown-item" href="{% url 'item:list' %}">List</a>
+                    <a class="dropdown-item" href="{% url 'item:trash_list' %}">Trash</a>
+                </div>
+            </li>
+            <div class="row">
+                <div class="col-sm-3 offset-sm-10">
+                    <button type="button" class="btn btn-dark btn-lg" id="myBtn">Login</button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 style="color:red;"><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label for="usrname"><span class="glyphicon glyphicon-user"></span>
+                                            Username</label>
+                                        <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="psw"><span class="glyphicon glyphicon-eye-open"></span>
+                                            Password</label>
+                                        <input type="text" class="form-control" id="psw" placeholder="Enter password">
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="" checked>Remember me</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-default btn-success btn-block"><span
+                                            class="glyphicon glyphicon-off"></span> Login
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default btn-default pull-left"
+                                        data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel
+                                </button>
+                                <p>Not a member? <a href="#">Sign Up</a></p>
+                                <p>Forgot <a href="#">Password?</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </ul>
+    </div>
+</nav>
+
+{% block breadcrumb_head %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'txn:index' %}">Home</a></li>
+            {% block breadcrumb_link %}
+                <li class="breadcrumb-item"><a href="{% url 'txn:list' %}">Transaction</a></li>
+                <li class="breadcrumb-item active" aria-current="page">New</li>
+            {% endblock %}
+        </ol>
+    </nav>
+
+{% endblock %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% block content %}
+
+{% endblock %}
+
+
+<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+{% block extra_scripts %}
+
+{% endblock %}
+
+<script>
+$(document).ready(function(){
+  $("#myBtn").click(function(){
+    $("#myModal").modal();
+  });
+});
+</script>
+
+</body>
+</html>
